@@ -1,5 +1,5 @@
 package com.franlops.stores
 
 interface OnClickListener {
-    fun onClick(store: Store)
+    fun onClick(storeEntity: StoreEntity)
 }

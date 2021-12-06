@@ -2,7 +2,6 @@ package com.franlops.stores
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.GridLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.franlops.stores.databinding.ActivityMainBinding
 
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         setContentView(mBinding.root)
 
         mBinding.btnSave.setOnClickListener {
-            val store = Store(name = mBinding.etName.text.toString().trim())
+            val store = StoreEntity(name = mBinding.etName.text.toString().trim())
             mAdapter.add(store)
         }
         setupRecyclerView()
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     /*
     * OnClickListener*/
-    override fun onClick(store: Store) {
+    override fun onClick(storeEntity: StoreEntity) {
 
     }
 }
