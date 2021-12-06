@@ -26,10 +26,12 @@ class StoreAdapter(private var stores: MutableList<StoreEntity>, private var lis
         with(holder){
             setListener(store)
             binding.tvName.text = store.name
+            binding.cbFavorite.isChecked = store.isFavorite
         }
     }
 
     override fun getItemCount(): Int = stores.size
+
     fun add(storeEntity: StoreEntity) {
         stores.add(storeEntity)
         notifyDataSetChanged()
@@ -40,11 +42,22 @@ class StoreAdapter(private var stores: MutableList<StoreEntity>, private var lis
         notifyDataSetChanged()
     }
 
+    fun update(storeEntity: StoreEntity) {
+        val index = stores.indexOf(storeEntity)
+        if(index != -1){
+            stores.set(index, storeEntity)
+            notifyItemChanged(index)
+        }
+    }
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val binding = ItemStoreBinding.bind(view)
 
         fun setListener(storeEntity: StoreEntity){
             binding.root.setOnClickListener { listener.onClick(storeEntity) }
+            binding.cbFavorite.setOnClickListener{
+                listener.onFavoriteStore(storeEntity)
+            }
         }
     }
 }
