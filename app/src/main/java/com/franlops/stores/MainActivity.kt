@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.franlops.stores.databinding.ActivityMainBinding
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
@@ -32,6 +34,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         mAdapter = StoreAdapter(mutableListOf(), this)
         mGridLayout = GridLayoutManager(this, 2)
 
+        getStores()
+
         mBinding.recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = mGridLayout
@@ -39,6 +43,15 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
+    private fun getStores(){
+        doAsync {
+            val stores = StoreApplication.database.storeDao().getAllStores()
+            uiThread {
+                mAdapter.setStores(stores)
+            }
+        }
+
+    }
     /*
     * OnClickListener*/
     override fun onClick(storeEntity: StoreEntity) {
